@@ -80,6 +80,26 @@ public class MainActivity extends AppCompatActivity {
         StartRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SamplingRate = 44000;
+                EditText sam = (EditText)findViewById(R.id.edit_rate);
+
+                try {
+                    SamplingRate = Integer.parseInt(sam.getText().toString());
+                }
+                catch (Exception e) {
+                    handler.post(
+                            new Runnable()
+                            {
+                                @Override
+                                public void run()
+                                {
+                                    Toast.makeText(getApplicationContext(), "Please provide sampling rate!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                    );
+                    return;
+                }
+
                 //恢复停止录音按钮，并禁用开始录音按钮
                 StopRecord.setEnabled(true);
                 StartRecord.setEnabled(false);
